@@ -273,7 +273,7 @@ position directly at kHz rates, and a reactive controller reading them in
 exact arithmetic can ride a limit that a banded, worst-corner-gated map must
 stand 30% back from.
 
-### Proposed L25 — the tax is charged against a BUDGET or against the MARGIN
+### L27 (registered) — the tax is charged against a BUDGET or against the MARGIN
 
 L21 established that band width is a constraint tax. R15 measures *what the
 tax is charged against*, and it is the difference between a viable harness
