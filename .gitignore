@@ -1,0 +1,5 @@
+target/
+*.bin
+NOVELTY-PRIVATE.md
+__pycache__/
+*.pyc

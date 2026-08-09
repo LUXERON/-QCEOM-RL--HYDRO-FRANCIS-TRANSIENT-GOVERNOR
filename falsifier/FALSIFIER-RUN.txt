@@ -1,0 +1,82 @@
+================================================================================================
+P1 FALSIFIER - R15 HYDRO-FRANCIS-TRANSIENT-GOVERNOR
+================================================================================================
+lattice: 13 gate x 14 speed x 16 surge_a x 16 surge_b = 46592 states x 7 rate tiers
+gates: spiral-case head <= 1.32*H0 | draft-tube head >= -8.0 m | speed <= 1.55 x rated
+objective: seconds to the declared HANDOVER STATE - gate closed AND surge below 75% of the ceiling margin
+kill rule (frozen): DP clean on every panel AND beats the best tuned multi-stage law >= 24/36 AND beats myopic greedy >= 24/36
+
+--- L21 gate slack (declared budget < 10% per gated axis) ---
+    ceiling   median 15.40%   worst 17.54%
+    draft     median 22.40%   worst 29.64%
+    speed     median  2.73%   worst  2.73%
+
+--- L17 per-crossing motion of the carried states ---
+    surge_a  median motion  5.0 bands,   3.9% of legal crossings never leave their band
+    surge_b  median motion  5.0 bands,   4.5% of legal crossings never leave their band
+    speed    median motion  1.0 bands,  40.1% of legal crossings never leave their band
+
+--- L8 sense check (MEASURED, not asserted) ---
+    spd_lo_W_hi  maxH   377.0  minHdt -10.34  maxSpd 1.117
+    spd_hi_W_lo  maxH   286.4  minHdt  -8.07  maxSpd 1.522
+    spd_lo_W_lo  maxH   299.6  minHdt  -9.08  maxSpd 1.096
+    spd_hi_W_hi  maxH   363.6  minHdt  -9.33  maxSpd 1.539
+
+--- L18 gated Pareto frontier (progress vs surge handed on) ---
+    sampled states with a real choice: 1429, no choice: 1312
+    single-dominator (monotone) frontier:  37.4%   [R8/R9 died at ~90%]
+
+panel         DP     greedy    1-stage    2-stage    3-stage   reactive
+-----------------------------------------------------------------------
+ 1000     4.96C      4.96C      3.97       2.98       2.98       3.97  
+ 1007     8.25C      8.25C      5.50       4.13       5.50       5.50  
+ 1014     5.96C      5.96C      4.97       3.98       4.18       4.97  
+ 1021     7.10       7.10       5.10       4.26       4.26       4.26  
+ 1028     4.85C      4.85C      3.63       3.63       4.85       3.63  
+ 1035     7.87       7.87       5.25       3.93       3.93       5.25  
+ 1042     5.09C      5.09C      3.06       3.06       3.06       4.07  
+ 1049     7.79C      7.79C      5.84       5.01       5.01       5.84  
+ 1056     7.75C      7.75C      5.17       4.31       5.17       5.17  
+ 1063     6.55C      6.55C      5.24       5.24       5.24       5.24  
+ 1070     6.55C      6.55C      4.36       4.36       4.36       5.46  
+ 1077     8.40C      7.35C      5.25       5.25       5.25       5.25  
+ 1084     5.73C      5.73C      3.82       3.82       3.82       3.82  
+ 1091     7.19C      7.19C      4.79       4.79       4.79       4.79  
+ 1098     6.66C      6.66C      5.55       4.44       4.44       5.55  
+ 1105     6.89C      6.89C      5.17       4.31       5.17       5.17  
+ 1112     8.01C      8.01C      6.68       6.68       6.68       6.68  
+ 1119     6.38C      6.38C      4.63       4.25       4.25       4.63  
+ 1126     6.30C      6.30C      4.20       4.20       4.20       5.25  
+ 1133     6.69C      6.69C      5.57       4.46       4.46       5.57  
+ 1140     8.07C      8.07C      6.72       5.38       5.38       5.38  
+ 1147     8.70       8.70       5.80       5.67       4.35       5.80  
+ 1154     8.68C      7.60C      5.43       5.43       5.43       5.43  
+ 1161     6.38C      6.38C      4.25       3.19       4.25       4.25  
+ 1168     5.17C      5.17C      4.14       3.10       4.14       4.14  
+ 1175     5.90C      5.90C      3.94       3.94       3.94       4.92  
+ 1182     5.90C      5.90C      4.92       3.93       3.93       4.92  
+ 1189     5.81C      6.64C      4.15       3.32       4.15       4.15  
+ 1196     6.75C      6.75C      4.82       4.82       4.82       5.78  
+ 1203     6.52C      6.52C      4.07       4.07       4.07       4.07  
+ 1210     9.47       8.29       7.10       5.92       5.92       7.10  
+ 1217     8.13       8.13       5.42       5.42       5.42       5.42  
+ 1224  1005.16x   1005.16x      7.23       6.20       6.20       6.20  
+ 1231     7.92C      6.93C      4.95       4.95       4.95       5.94  
+ 1238     7.09C      7.09C      4.72       3.94       4.72       4.72  
+ 1245     6.01C      6.01C      5.15       4.29       4.29       5.15  
+
+NOTE: this run was launched under a wall-clock cap that expired during the
+post-loop ablation, so the summary block below was recomputed from the panel
+table above by `tally.py` and the ablation was re-run separately into
+ABLATION-RUN.txt. The panel table itself is the full 36-panel measurement.
+
+DP violation-free AND reaching handover  :  5/36
+   (30 panels breach the draft-tube floor on the plant; 1 never reaches handover)
+DP beats the best tuned multi-stage law  :  0/36   median 1.55x slower
+DP beats the myopic greedy               :  1/36
+greedy beats DP                          :  4/36
+DP and greedy return IDENTICAL times on  : 31/36
+mean time to handover: DP 6.90 s   best tuned multi-stage 4.38 s
+tuned 2-stage beats tuned 1-stage on 21/36; a 3rd stage helps on 1/36
+
+VERDICT: HARNESS DIES

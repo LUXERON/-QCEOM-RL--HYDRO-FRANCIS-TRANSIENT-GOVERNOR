@@ -1,0 +1,17 @@
+==========================================================================
+L22/L23 ABLATION - overpressure ceiling + L14 sustainability gate
+==========================================================================
+
+gates ON  (as declared)
+    seed 1000: DP    4.96  greedy    4.96
+    seed 1007: DP    8.25  greedy    8.25
+    seed 1014: DP    5.96  greedy    5.96
+    seed 1021: DP    7.10  greedy    7.10
+    seed 1028: DP    4.85  greedy    4.85
+    seed 1035: DP    7.87  greedy    7.87
+    seed 1042: DP    5.09  greedy    5.09
+    seed 1049: DP    7.79  greedy    7.79
+  -> DP strictly better 0/8, greedy strictly better 0/8, identical 8/8, DP clean 2/8
+
+gates OFF (slot 0 ablated)
+    seed 1000: DP    9.40  greedy    9.40

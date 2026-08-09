@@ -1,0 +1,17 @@
+==========================================================================
+L22/L23 ABLATION - overpressure ceiling + L14 sustainability gate
+==========================================================================
+
+gates OFF (slot 0 ablated)
+    seed 1000: DP    9.40  greedy    9.40
+    seed 1007: DP    5.50  greedy    5.50
+    seed 1014: DP    4.97  greedy    4.97
+    seed 1021: DP   12.96  greedy   12.96
+    seed 1028: DP    4.85  greedy    4.85
+  -> DP strictly better 0/8, greedy strictly better 0/8, identical 5/8, DP clean 0/8
+
+READ: if ablating the ceiling and the sustainability gate makes exact DP
+pull AHEAD of the myopic greedy, then those gates were cannibalising their
+own optimizer - the L23 signature, and the reason to call the governor the
+product and the optimizer decoration. If it changes nothing, the lookahead
+was never binding on any reachable trajectory in the first place.
